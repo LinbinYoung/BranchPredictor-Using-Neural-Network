@@ -33,13 +33,13 @@ void initialized_CUSTOM(){
 
     CPT_custom = (uint8_t*)malloc(sizeof(uint8_t)*PHT_SIZE_custom);
     for (int i = 0; i < PHT_SIZE_custom; i++){
-        CPT_custom[i] = 2;
+        CPT_custom[i] = 1;
     }
 
     //intialized the two-dimension weight array
     WEIGHT = (int32_t**)malloc(sizeof(int32_t*)*LHT_SIZE_custom);
     for (int i = 0; i < LHT_SIZE_custom; i ++){
-        WEIGHT[i] = (int32_t*)malloc(sizeof(int32_t)*(lhistoryBits + 1));
+        WEIGHT[i] = (int32_t*)malloc(sizeof(int32_t)*(lhistoryBits + ghistoryBits +1));
     }//end for
 }
 
@@ -65,9 +65,10 @@ int32_t Perceptron_predict(uint32_t pc){
     uint32_t index_c = pc & pcmask_custom;
     int32_t* weight_for_branch = WEIGHT[index_c];
     uint32_t history_record = LHT_custom[index_c] & lmask_custom;
+    uint32_t combine_record = (history_record << ghistoryBits) + Global_History_custom;
     int32_t sum = weight_for_branch[0];
-    for (int i = 0; i < lhistoryBits; i ++){
-        int32_t res = (history_record >> i) & 1;
+    for (int i = 0; i < lhistoryBits + ghistoryBits; i ++){
+        int32_t res = (combine_record >> i) & 1;
         if (res == 0){
             res = -1;
         }
@@ -102,9 +103,10 @@ void train_CUSTOM(uint32_t pc, uint8_t outcome){
     uint32_t index_c = pc & pcmask_custom;
     int32_t* weight_for_branch = WEIGHT[index_c];
     uint32_t history_record = LHT_custom[index_c] & lmask_custom;
+    uint32_t combine_record = (history_record << ghistoryBits) + Global_History_custom;
     int32_t sum = weight_for_branch[0];
-    for (int i = 0; i < lhistoryBits; i ++){
-        int32_t res = (history_record >> i) & 1;
+    for (int i = 0; i < lhistoryBits + ghistoryBits; i ++){
+        int32_t res = (combine_record >> i) & 1;
         if (res == 0){
             res = -1;
         }
@@ -129,9 +131,9 @@ void train_CUSTOM(uint32_t pc, uint8_t outcome){
     }
     if (outcome != lres){
         weight_for_branch[0] = weight_for_branch[0] + actual_outcome*1;
-        for (int i = 0; i < lhistoryBits; i ++){
+        for (int i = 0; i < lhistoryBits + ghistoryBits; i ++){
             int32_t his = 1;
-            uint32_t record = (history_record >> i) & 1;
+            uint32_t record = (combine_record >> i) & 1;
             if (record == 0){
                 his = -1;
             }
