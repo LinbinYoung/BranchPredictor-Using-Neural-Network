@@ -26,12 +26,11 @@ void usage(){
   fprintf(stderr,"    static\n"
                  "    gshare:<# ghistory>\n"
                  "    tournament:<# ghistory>:<# lhistory>:<# index>\n"
-                 "    custom:<# ghistory>:<# index>\n");
+                 "    custom:<# ghistory>:<# lhistory>:<# index>\n");
 }
 
 // Process an option and update the predictor
 // configuration variables accordingly
-//
 // Returns True if Successful
 
 int handle_option(char *arg)
@@ -47,7 +46,7 @@ int handle_option(char *arg)
     sscanf(arg+13,"%d:%d:%d", &ghistoryBits, &lhistoryBits, &pcIndexBits);
   } else if (!strncmp(arg,"--custom:",9)) {
     bpType = CUSTOM;
-    sscanf(arg+9, "%d:%d", &ghistoryBits, &pcIndexBits);
+    sscanf(arg+9, "%d:%d:%d", &ghistoryBits, &lhistoryBits ,&pcIndexBits);
   } else if (!strcmp(arg,"--verbose")) {
     verbose = 1;
   } else {

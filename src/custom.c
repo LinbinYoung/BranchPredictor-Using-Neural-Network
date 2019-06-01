@@ -33,7 +33,7 @@ void initialized_CUSTOM(){
 
     CPT_custom = (uint8_t*)malloc(sizeof(uint8_t)*PHT_SIZE_custom);
     for (int i = 0; i < PHT_SIZE_custom; i++){
-        CPT_custom[i] = 1;
+        CPT_custom[i] = 2;
     }
 
     //intialized the two-dimension weight array
