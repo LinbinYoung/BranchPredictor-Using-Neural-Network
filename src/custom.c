@@ -99,7 +99,6 @@ void train_CUSTOM(uint32_t pc, uint8_t outcome){
     //get all the necessary indexs and predictions before any modification
     uint32_t index = Global_History_custom & gmask_tor_custom;
     uint8_t global_res = PHT_tor_custom[index];
-    
     uint32_t index_c = pc & pcmask_custom;
     int32_t* weight_for_branch = WEIGHT[index_c];
     uint32_t history_record = LHT_custom[index_c] & lmask_custom;
@@ -111,7 +110,6 @@ void train_CUSTOM(uint32_t pc, uint8_t outcome){
         }
         sum = sum + weight_for_branch[i+1] * res;
     }
-
     uint8_t lres;
     uint8_t gres;
     if (global_res > 1){

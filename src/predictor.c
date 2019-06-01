@@ -30,6 +30,7 @@ int bpType;       // Branch Prediction Type
 int verbose;
 
 #include "custom.c"
+
 //------------------------------------//
 //      Predictor Data Structures     //
 //------------------------------------//
@@ -105,10 +106,9 @@ void initialized_TOURNAMENT(){
   
     CPT = (uint8_t*)malloc(sizeof(uint8_t)*PHT_SIZE);
     for (int i = 0; i < PHT_SIZE; i++){
-        CPT[i] = 2;
+        CPT[i] = 1;
     }
 }
-
 
 void init_predictor()
 {
@@ -118,9 +118,9 @@ void init_predictor()
     case GSHARE:
       initialized_GSHARE();
     case TOURNAMENT:
-      initialized_CUSTOM();
+      initialized_TOURNAMENT();
     case CUSTOM:
-    //   initialized_CUSTOM();
+      initialized_CUSTOM();
     default:
       break;
   }
@@ -198,9 +198,9 @@ uint8_t make_prediction(uint32_t pc)
     case GSHARE:
       return GSHARE_predictor(pc);
     case TOURNAMENT:
-      return CUSTOM_predictor(pc);
+      return TOURNAMENT_predictor(pc);
     case CUSTOM:
-    //   return CUSTOM_predictor(pc);
+      return CUSTOM_predictor(pc);
     default:
       break;
   }
@@ -294,9 +294,9 @@ void train_predictor(uint32_t pc, uint8_t outcome)
     case GSHARE:
       train_GSHARE(pc, outcome);
     case TOURNAMENT:
-      train_CUSTOM(pc, outcome);
+      train_TOURNAMENT(pc, outcome);
     case CUSTOM:
-    //   train_CUSTOM(pc, outcome);
+      train_CUSTOM(pc, outcome);
     default:
       break;
   }
