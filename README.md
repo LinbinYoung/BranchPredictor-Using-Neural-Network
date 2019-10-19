@@ -1,7 +1,5 @@
 # Branch Predictor Using Perceptron
 
-------
-
 In computer architecture, a branch predictor is a digital circuit that tries to guess which way a branch (e.g. an if–then–else structure) will go before this is known definitively. The purpose of the branch predictor is to improve the flow in the instruction pipeline. Branch predictors play a critical role in achieving high effective performance in many modern pipelined microprocessor architectures, such as x86.
 
 For this project, we use 2-bit saturating counter. It is a state machine with four states.
