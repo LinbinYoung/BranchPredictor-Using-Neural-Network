@@ -8,8 +8,6 @@ For this project, we use 2-bit saturating counter. It is a state machine with fo
 
 ![stateMachine](./doc/StateMachine.png)
 
-------
-
 ### Achievement
 
 | DataSet | GShare:13   |  Tournament:9:10:10  | Custom:15:15:10  | 
